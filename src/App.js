@@ -301,9 +301,7 @@ import 'aframe';
 import './App.css';
 
 function App() {
-  // Appコンポーネントがマウントされたときに、A-Frameのカスタムコンポーネントを登録します。
   useEffect(() => {
-    // すでに登録済みの場合は再登録をスキップします。
     if (AFRAME.components['hit-test-handler']) {
       return;
     }
@@ -312,15 +310,13 @@ function App() {
       init: function () {
         this.el.addEventListener('mousedown', function (evt) {
           const intersectedEl = evt.detail.intersectedEl;
-
-          // クリックした要素が 'target' クラスを持っている場合、それを非表示にします。
           if (intersectedEl && intersectedEl.classList.contains('target')) {
             intersectedEl.setAttribute('visible', false);
           }
         });
       },
     });
-  }, []); // 空の依存配列[]により、この処理は一度だけ実行されます。
+  }, []);
 
   return (
     <div className="App">
@@ -333,12 +329,12 @@ function App() {
         <a-cylinder
           className="target"
           rotation="90 38.434 0"
-          position="1.66192 0.75 1.64353"
+          position="1.66192 0.75 1.6433"
           radius="0.35"
           height="0.01"
           color="#FFC65D"
         ></a-cylinder>
-
+        {/* ... 他にもシリンダーを配置 ... */}
         <a-cylinder
           className="target"
           rotation="90 38.434 0"
@@ -347,25 +343,22 @@ function App() {
           height="0.01"
           color="#FFC65D"
         ></a-cylinder>
-
         <a-cylinder
           className="target"
-          rotation="90.00021045914971 -43.673707933847 0"
+          rotation="90.00021 -43.673 0"
           position="1.93213 0.8299 -0.84174"
           radius="0.35"
           height="0.01"
           color="#FFC65D"
         ></a-cylinder>
-
         <a-cylinder
           className="target"
-          rotation="89.99963750135457 133.08319890621684 0"
+          rotation="89.999 133.083 0"
           position="-1.13573 0.75 1.77243"
           radius="0.35"
           height="0.01"
           color="#FFC65D"
         ></a-cylinder>
-
         <a-cylinder
           className="target"
           rotation="42.709 -104.296 -122.116"
@@ -374,46 +367,41 @@ function App() {
           height="0.01"
           color="#FFC65D"
         ></a-cylinder>
-
         <a-cylinder
           className="target"
-          rotation="72.98279098596913 179.9998479605043 -169.12167126215047"
+          rotation="72.982 179.999 -169.121"
           position="0.82084 1.58734 -1.71492"
           radius="0.35"
           height="0.01"
           color="#FFC65D"
         ></a-cylinder>
-
         <a-cylinder
           className="target"
-          rotation="76.04582335873852 114.91929088497949 20.738780352555278"
+          rotation="76.045 114.919 20.738"
           position="2.09379 1.77134 0.30033"
           radius="0.35"
           height="0.01"
           color="#FFC65D"
         ></a-cylinder>
-
         <a-cylinder
           className="target"
-          rotation="-55.98313320443761 -173.87091842598988 173.3879150046946"
+          rotation="-55.983 -173.870 173.387"
           position="0.08255 1.63931 2.45461"
           radius="0.35"
           height="0.01"
           color="#FFC65D"
         ></a-cylinder>
-
         <a-cylinder
           className="target"
-          rotation="73.16155381804995 -90.00021045914971 168.4937095186871"
+          rotation="73.161 -90.000 168.493"
           position="-2.19323 1.55836 0.6957"
           radius="0.35"
           height="0.01"
           color="#FFC65D"
         ></a-cylinder>
-
         <a-cylinder
           className="target"
-          rotation="70.67147924041139 -90.00021045914971 -159.3636270532774"
+          rotation="70.671 -90.000 -159.363"
           position="-2.746 0.75 -0.545"
           radius="0.2"
           height="0.01"
@@ -429,26 +417,7 @@ function App() {
           height="4"
           color="#7BC8A4"
         ></a-plane>
-
-        <a-sky
-          id="mySky"
-          color="#ECECEC"
-          hide-on-enter-ar
-        ></a-sky>
-
-        {/* カーソルとヒットテスト用のエンティティ */}
-        <a-entity
-          cursor="rayOrigin: mouse"
-          raycaster="objects: .target;"
-          hit-test-handler
-        ></a-entity>
-
-        {/* カメラ */}
-        <a-camera
-          id="myCamera"
-          position="0 0.4 0"
-          wasd-controls="acceleration:10;"
-        ></a-camera>
+        <a-sky id="mySky" color="#ECECEC" hide-on-enter-ar></a-sky>
 
         {/* ライト */}
         <a-entity light="type: ambient; color: #BBB"></a-entity>
@@ -456,6 +425,18 @@ function App() {
           light="type: directional; color: #FFF; intensity: 0.6"
           position="-0.5 1 1"
         ></a-entity>
+        
+        {/* ▼▼▼▼▼ 修正点 ▼▼▼▼▼ */}
+        {/* カメラの中にカーソルとヒットテスト用のエンティティを配置 */}
+        <a-camera id="myCamera" position="0 0.4 0" wasd-controls="acceleration:10;">
+          <a-entity
+            cursor="rayOrigin: mouse"
+            raycaster="objects: .target;"
+            hit-test-handler
+          ></a-entity>
+        </a-camera>
+        {/* ▲▲▲▲▲ 修正点 ▲▲▲▲▲ */}
+
       </a-scene>
     </div>
   );
