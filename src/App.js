@@ -72,7 +72,7 @@ function App() {
 const AFrameScene = ({ className = '' }) => {
   return (
     <div className={className}>
-      <a-scene embedded vr-mode-ui="enabled: false">
+      <a-scene embedded vr-mode-ui="enabled: true">
         <a-entity
           camera
           look-controls
