@@ -135,7 +135,7 @@ const InteractiveScene = ({ className = '' }) => {
         }
       });
     }
-  }, []); // []でコンポーネントがマウントされた時のみ実行
+  }); // []でコンポーネントがマウントされた時のみ実行
 
   return (
     <div className={className}>
