@@ -19,68 +19,45 @@ function App() {
       };
       document.head.appendChild(script);
     }
-
-    if (typeof AFRAME !== 'undefined' && !AFRAME.components['hit-test-handler']) {
-      AFRAME.registerComponent('hit-test-handler', {
-        init: function () {
-          this.el.addEventListener('mousedown', function (evt) {
-            const intersectedEl = evt.detail.intersectedEl;
-            if (intersectedEl && intersectedEl.classList.contains('target')) {
-              intersectedEl.setAttribute('visible', false);
-            }
-          });
-        }
-      });
-    }    
-
   }, []);
-
-  // const renderScene = () => {
-  //   if (!aframeLoaded) {
-  //     return <div>Loading A-Frame...</div>;
-  //   }
-
-  //   switch (currentScene) {
-  //     case 'interactive':
-  //       // InteractiveSceneコンポーネントを修正して使用
-  //       return <InteractiveScene className="aframe-scene" />;
-  //     case 'vr':
-  //       return <VRScene className="aframe-scene" />;
-  //     default:
-  //       return <AFrameScene className="aframe-scene" />;
-  //   }
-  // };
 
   const renderScene = () => {
     if (!aframeLoaded) {
       return <div>Loading A-Frame...</div>;
     }
 
-    return <InteractiveScene className="aframe-scene" />;
-
-    // switch (currentScene) {
-    //   case 'interactive':
-    //     // InteractiveSceneコンポーネントを修正して使用
-    //     return <InteractiveScene className="aframe-scene" />;
-    //   case 'vr':
-    //     return <VRScene className="aframe-scene" />;
-    //   default:
-    //     return <AFrameScene className="aframe-scene" />;
-    // }
+    switch (currentScene) {
+      case 'interactive':
+        // InteractiveSceneコンポーネントを修正して使用
+        return <InteractiveScene className="aframe-scene" />;
+      case 'vr':
+        return <VRScene className="aframe-scene" />;
+      default:
+        return <AFrameScene className="aframe-scene" />;
+    }
   };
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1>A-Frame React Demo</h1>
-        <p>VR/AR 3Dシーンを体験してください</p>
-        <p>A-Frame Status: {aframeLoaded ? 'Loaded' : 'Loading...'}</p>
         <div className="scene-controls">
+          <button 
+            onClick={() => setCurrentScene('basic')}
+            className={currentScene === 'basic' ? 'active' : ''}
+          >
+            基本シーン
+          </button>
           <button 
             onClick={() => setCurrentScene('interactive')}
             className={currentScene === 'interactive' ? 'active' : ''}
           >
             インタラクティブ
+          </button>
+          <button 
+            onClick={() => setCurrentScene('vr')}
+            className={currentScene === 'vr' ? 'active' : ''}
+          >
+            VRシーン
           </button>
         </div>
       </header>
@@ -134,7 +111,22 @@ const AFrameScene = ({ className = '' }) => {
 
 // 修正するInteractiveSceneコンポーネント
 const InteractiveScene = ({ className = '' }) => {
-
+  // A-FrameのカスタムコンポーネントをReactのuseEffectで定義
+  useEffect(() => {
+    // A-Frameがすでに読み込まれていることを確認
+    if (typeof AFRAME !== 'undefined' && !AFRAME.components['hit-test-handler']) {
+      AFRAME.registerComponent('hit-test-handler', {
+        init: function () {
+          this.el.addEventListener('mousedown', function (evt) {
+            const intersectedEl = evt.detail.intersectedEl;
+            if (intersectedEl && intersectedEl.classList.contains('target')) {
+              intersectedEl.setAttribute('visible', false);
+            }
+          });
+        }
+      });
+    }
+  }, []); // []でコンポーネントがマウントされた時のみ実行
 
   return (
     <div className={className}>
