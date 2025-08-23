@@ -370,7 +370,6 @@ const InteractiveScene = ({ className = '' }) => {
       <a-scene
         embedded
         webxr="requiredFeatures: hit-test;"
-        vr-mode-ui="enabled: false;"
         renderer="logarithmicDepthBuffer: true;"
         hit-test-handler // a-sceneに直接アタッチ
       >
