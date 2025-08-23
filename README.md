@@ -1,13 +1,13 @@
-# A-Frame React TypeScript Demo
+# A-Frame React JavaScript Demo
 
-VR/AR 3Dシーンを体験できるReact + TypeScriptアプリケーションです。A-FrameとReactを組み合わせて、インタラクティブな3Dコンテンツを作成できます。
+VR/AR 3Dシーンを体験できるReact + JavaScriptアプリケーションです。A-FrameとReactを組み合わせて、インタラクティブな3Dコンテンツを作成できます。
 
 ## 機能
 
 - **基本シーン**: シンプルな3Dオブジェクトの表示
 - **インタラクティブシーン**: クリックで色や位置が変わるオブジェクト
 - **VRシーン**: VRヘッドセット対応のシーン
-- **TypeScript対応**: 型安全な開発環境
+- **JavaScript**: シンプルで軽量な開発環境
 
 ## 開発環境の構築
 
@@ -34,22 +34,22 @@ npm run build
 ## 使用技術
 
 - **React 18**: UIライブラリ
-- **TypeScript**: 型安全なJavaScript
+- **JavaScript**: 軽量で高速な開発
 - **A-Frame**: WebVR/WebARフレームワーク
-- **aframe-react**: A-FrameとReactの統合ライブラリ
+- **CDN版A-Frame**: 動的読み込みによる最適化
 
 ## プロジェクト構成
 
 ```
 src/
 ├── components/
-│   ├── AFrameScene.tsx       # 基本的な3Dシーン
-│   ├── InteractiveScene.tsx  # インタラクティブな3Dシーン
-│   ├── VRScene.tsx          # VR対応の3Dシーン
-│   └── CustomBox.tsx        # 再利用可能な3Dボックスコンポーネント
-├── App.tsx                  # メインアプリケーション
+│   ├── AFrameScene.js        # 基本的な3Dシーン
+│   ├── InteractiveScene.js   # インタラクティブな3Dシーン
+│   ├── VRScene.js           # VR対応の3Dシーン
+│   └── CustomBox.js         # 再利用可能な3Dボックスコンポーネント
+├── App.js                   # メインアプリケーション
 ├── App.css                 # スタイルシート
-└── index.tsx               # エントリーポイント
+└── index.js                # エントリーポイント
 ```
 
 ## 主な機能
@@ -58,28 +58,27 @@ src/
 - **インタラクティブ要素**: クリック可能な3Dオブジェクト
 - **アニメーション**: 回転アニメーション付きのオブジェクト
 - **レスポンシブデザイン**: モバイルデバイス対応
+- **動的A-Frame読み込み**: CDNからA-Frameを動的に読み込み
 
 ## 使用方法
 
 ### 基本的なA-Frameコンポーネント
 
-```tsx
-import { Entity, Scene } from 'aframe-react';
-
+```jsx
 const MyScene = () => (
-  <Scene>
-    <Entity
-      geometry={{ primitive: 'box' }}
+  <a-scene>
+    <a-box
       position="0 0 -3"
-      material={{ color: '#4CC3D9' }}
+      color="#4CC3D9"
+      animation="property: rotation; to: 0 360 0; loop: true; dur: 3000"
     />
-  </Scene>
+  </a-scene>
 );
 ```
 
 ### カスタムコンポーネント
 
-```tsx
+```jsx
 import CustomBox from './components/CustomBox';
 
 const App = () => (
@@ -87,8 +86,7 @@ const App = () => (
     <CustomBox 
       position="0 0 -3" 
       color="#FF0000" 
-      size={2}
-      onClick={() => console.log('Clicked!')}
+      size="2 2 2"
     />
   </div>
 );
@@ -115,12 +113,17 @@ npm run build
 ## 技術スタック
 
 - **React 18**: UIライブラリ
-- **TypeScript**: 型安全な開発
+- **JavaScript**: 軽量で高速な開発
 - **A-Frame**: WebVR/WebARフレームワーク
-- **aframe-react**: A-FrameとReactの統合
+- **CDN版A-Frame**: 動的読み込みによる最適化
+
+## 変更履歴
+
+- **v2.0**: TypeScriptからJavaScriptに変更、A-FrameをCDNから動的読み込みに変更
+- **v1.0**: 初期リリース（TypeScript版）
 
 ## 参考資料
 
 - [A-Frame公式ドキュメント](https://aframe.io/docs/)
-- [aframe-react](https://github.com/supermedium/aframe-react)
-- [React公式ドキュメント](https://react.dev/) 
+- [React公式ドキュメント](https://react.dev/)
+- [A-Frame CDN](https://aframe.io/releases/) 
