@@ -8,6 +8,8 @@
       AFRAME.registerComponent('hit-test-handler', {
         init: function () {
           this.el.addEventListener('mousedown', function (evt) {
+            const intersectedEl = evt.detail.intersectedEl;
+
             if (intersectedEl && intersectedEl.classList.contains('target')) {
               intersectedEl.setAttribute('visible', false);
             }
