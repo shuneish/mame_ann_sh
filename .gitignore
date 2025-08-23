@@ -1,0 +1,51 @@
+# OSおよびエディタ関連のファイル
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node.js開発関連のファイル（もしNode.jsを使用する場合）
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# ログファイル
+*.log
+logs/
+
+# 環境変数ファイル
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ビルド関連
+dist/
+build/
+.vercel/
+
+# 一時ファイル
+*.tmp
+*.temp
+.cache/
+
+# バックアップファイル
+*.bak
+*.backup
+
+# 3Dモデルファイルの一時ファイル（必要に応じて）
+*.blend1
+*.blend2
+*.blend3 

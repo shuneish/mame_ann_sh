@@ -1,0 +1,77 @@
+.App {
+  text-align: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.App-header {
+  background-color: #282c34;
+  padding: 20px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.App-header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.App-header p {
+  margin: 10px 0 0 0;
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.scene-controls {
+  margin: 20px 0;
+}
+
+.scene-controls button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #61dafb;
+  color: #282c34;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.scene-controls button:hover {
+  background-color: #4fa8c7;
+  transform: translateY(-2px);
+}
+
+.scene-controls button.active {
+  background-color: #4fa8c7;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+main {
+  flex: 1;
+  position: relative;
+}
+
+.aframe-scene {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.aframe-scene a-scene {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* A-Frameシーンのレスポンシブ対応 */
+@media (max-width: 768px) {
+  .App-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .App-header p {
+    font-size: 0.9rem;
+  }
+} 
