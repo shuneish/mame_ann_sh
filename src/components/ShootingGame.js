@@ -178,7 +178,7 @@ const ShootingGame = ({ className = '' }) => {
         ))}
 
         {/* AR用の地面（現実世界の地面に合わせる） */}
-        <a-plane
+        {/* <a-plane
           position="0 0 -4"
           rotation="-90 0 0"
           width="10"
@@ -186,10 +186,10 @@ const ShootingGame = ({ className = '' }) => {
           color="#7BC8A4"
           material="opacity: 0.5; transparent: true;"
           arjs-look-at="[camera]"
-        />
+        /> */}
 
         {/* AR用の空（現実世界を表示） */}
-        <a-sky color="#87CEEB" material="opacity: 0.1; transparent: true;" />
+        {/* <a-sky color="#87CEEB" material="opacity: 0.1; transparent: true;" /> */}
 
         {/* ライティング */}
         <a-light type="ambient" color="#404040" />
