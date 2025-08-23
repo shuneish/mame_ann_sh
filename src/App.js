@@ -136,6 +136,7 @@ const InteractiveScene = ({ className = '' }) => {
       <a-scene
         embedded
         xr-mode-ui="XRMode: xr"
+        ar-hit-test="type: tracked; target: .target;"
         renderer="logarithmicDepthBuffer: true;"
       >
         <a-cylinder 
@@ -248,7 +249,6 @@ const InteractiveScene = ({ className = '' }) => {
   );
 };
 
-// その他のコンポーネント (変更なし)
 const VRScene = ({ className = '' }) => {
   return (
     <div className={className}>
