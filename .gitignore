@@ -1,11 +1,24 @@
 # OSおよびエディタ関連のファイル
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 .vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# Node.js開発関連のファイル
+# Node.js開発関連のファイル（もしNode.jsを使用する場合）
 node_modules/
-npm-debug.log
-yarn-error.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
 
 # ログファイル
 *.log
