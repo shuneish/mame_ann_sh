@@ -45,22 +45,10 @@ function App() {
         <p>A-Frame Status: {aframeLoaded ? 'Loaded' : 'Loading...'}</p>
         <div className="scene-controls">
           <button 
-            onClick={() => setCurrentScene('basic')}
-            className={currentScene === 'basic' ? 'active' : ''}
-          >
-            基本シーン
-          </button>
-          <button 
             onClick={() => setCurrentScene('interactive')}
             className={currentScene === 'interactive' ? 'active' : ''}
           >
             インタラクティブ
-          </button>
-          <button 
-            onClick={() => setCurrentScene('vr')}
-            className={currentScene === 'vr' ? 'active' : ''}
-          >
-            VRシーン
           </button>
         </div>
       </header>
