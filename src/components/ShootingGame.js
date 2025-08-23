@@ -6,6 +6,7 @@ const ShootingGame = ({ className = '' }) => {
   const [gameActive, setGameActive] = useState(false);
   const [targets, setTargets] = useState([]);
   const [showScoreManager, setShowScoreManager] = useState(false);
+  const [sceneLoaded, setSceneLoaded] = useState(false);
   const gameRef = useRef(null);
 
   // ターゲットの生成
@@ -50,29 +51,49 @@ const ShootingGame = ({ className = '' }) => {
     return () => clearTimeout(timer);
   }, [gameActive]);
 
+  // A-Frameシーンの読み込み完了を待つ
+  useEffect(() => {
+    const checkAFrameLoaded = () => {
+      if (window.AFRAME) {
+        console.log('A-Frame loaded');
+        setSceneLoaded(true);
+      } else {
+        setTimeout(checkAFrameLoaded, 100);
+      }
+    };
+
+    checkAFrameLoaded();
+  }, []);
+
   // DOMイベントリスナーを設定
   useEffect(() => {
+    if (!sceneLoaded) return;
+
     const handleClick = (event) => {
-      // ターゲット要素をクリックしたかチェック
-      const targetElement = event.target.closest('[data-target-id]');
-      if (targetElement && gameActive) {
-        const targetId = targetElement.getAttribute('data-target-id');
-        console.log('Target clicked:', targetId);
-        
-        // スコア加算
-        setScore(prev => prev + 10);
-        
-        // ターゲットを削除
-        setTargets(prev => {
-          const newTargets = prev.filter(target => target.id.toString() !== targetId);
-          console.log('Remaining targets:', newTargets.length);
-          return newTargets;
-        });
-        
-        // 新しいターゲットを生成
-        setTimeout(() => {
-          setTargets(prev => [...prev, generateTarget()]);
-        }, 1000);
+      try {
+        // ターゲット要素をクリックしたかチェック
+        const targetElement = event.target.closest('[data-target-id]');
+        if (targetElement && gameActive) {
+          const targetId = targetElement.getAttribute('data-target-id');
+          console.log('Target clicked:', targetId);
+          
+          // スコア加算
+          setScore(prev => prev + 10);
+          
+          // ターゲットを削除
+          setTargets(prev => {
+            const newTargets = prev.filter(target => target.id.toString() !== targetId);
+            console.log('Remaining targets:', newTargets.length);
+            return newTargets;
+          });
+          
+          // 新しいターゲットを生成
+          setTimeout(() => {
+            setTargets(prev => [...prev, generateTarget()]);
+          }, 1000);
+        }
+      } catch (error) {
+        console.error('Error handling click:', error);
       }
     };
 
@@ -84,7 +105,7 @@ const ShootingGame = ({ className = '' }) => {
       document.removeEventListener('click', handleClick);
       document.removeEventListener('touchstart', handleClick);
     };
-  }, [gameActive]);
+  }, [gameActive, sceneLoaded]);
 
   return (
     <div className={className}>
@@ -114,7 +135,10 @@ const ShootingGame = ({ className = '' }) => {
         )}
       </div>
 
-      <a-scene embedded vr-mode-ui="enabled: false">
+      <a-scene 
+        embedded 
+        vr-mode-ui="enabled: false"
+      >
         {/* カメラ */}
         <a-entity
           camera
@@ -145,7 +169,6 @@ const ShootingGame = ({ className = '' }) => {
             data-target-id={target.id}
             class="target"
             animation="property: rotation; to: 0 360 0; loop: true; dur: 3000"
-            style="cursor: pointer;"
           />
         ))}
 
