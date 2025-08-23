@@ -5,18 +5,25 @@ function App() {
   const [aframeLoaded, setAframeLoaded] = useState(false);
 
   useEffect(() => {
-    // A-Frameの初期化
     if (typeof window !== 'undefined') {
-      const script = document.createElement('script');
-      script.src = 'https://aframe.io/releases/1.4.2/aframe.min.js';
-      script.onload = () => {
-        console.log('A-Frame loaded successfully');
-        setAframeLoaded(true);
+      const aframeScript = document.createElement('script');
+      aframeScript.src = 'https://aframe.io/releases/1.4.2/aframe.min.js';
+      aframeScript.onload = () => {
+        const hitTestScript = document.createElement('script');
+        hitTestScript.src = 'https://unpkg.com/aframe-ar-hit-test@1.1.0/dist/aframe-ar-hit-test.js';
+        hitTestScript.onload = () => {
+          console.log('Both A-Frame and ar-hit-test loaded successfully');
+          setAframeLoaded(true);
+        };
+        hitTestScript.onerror = () => {
+          console.error('Failed to load ar-hit-test');
+        };
+        document.head.appendChild(hitTestScript);
       };
-      script.onerror = () => {
+      aframeScript.onerror = () => {
         console.error('Failed to load A-Frame');
       };
-      document.head.appendChild(script);
+      document.head.appendChild(aframeScript);
     }
   }, []);
 
