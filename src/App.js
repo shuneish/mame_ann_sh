@@ -22,7 +22,7 @@ function App() {
 
   const renderScene = () => {
     if (!aframeLoaded) {
-      return <div>Loading A-Frame...</div>;
+      return <div>Loading...</div>;
     }
     return <InteractiveScene className="aframe-scene" />;
   };
@@ -58,8 +58,8 @@ const InteractiveScene = ({ className = '' }) => {
       <a-scene
         embedded
         webxr="requiredFeatures: hit-test;"
+        vr-mode-ui="enabled: false;"
         renderer="logarithmicDepthBuffer: true;"
-        xr-mode-ui="XRMode: xr"
       >
         <a-cylinder 
           class="target"
