@@ -2,41 +2,68 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
+  const [currentScene, setCurrentScene] = useState('basic');
   const [aframeLoaded, setAframeLoaded] = useState(false);
 
   useEffect(() => {
+    // A-Frameの初期化
     if (typeof window !== 'undefined') {
-      const aframeScript = document.createElement('script');
-      aframeScript.src = 'https://aframe.io/releases/1.4.2/aframe.min.js';
-      aframeScript.onload = () => {
-        const hitTestScript = document.createElement('script');
-        hitTestScript.src = 'https://unpkg.com/aframe-ar-hit-test@1.1.0/dist/aframe-ar-hit-test.js';
-        hitTestScript.onload = () => {
-          console.log('Both A-Frame and ar-hit-test loaded successfully');
-          setAframeLoaded(true);
-        };
-        hitTestScript.onerror = () => {
-          console.error('Failed to load ar-hit-test');
-        };
-        document.head.appendChild(hitTestScript);
+      const script = document.createElement('script');
+      script.src = 'https://aframe.io/releases/1.4.2/aframe.min.js';
+      script.onload = () => {
+        console.log('A-Frame loaded successfully');
+        setAframeLoaded(true);
       };
-      aframeScript.onerror = () => {
+      script.onerror = () => {
         console.error('Failed to load A-Frame');
       };
-      document.head.appendChild(aframeScript);
+      document.head.appendChild(script);
     }
   }, []);
 
   const renderScene = () => {
     if (!aframeLoaded) {
-      return <div>Loading...</div>;
+      return <div>Loading A-Frame...</div>;
     }
-    return <InteractiveScene className="aframe-scene" />;
+
+    switch (currentScene) {
+      case 'interactive':
+        // InteractiveSceneコンポーネントを修正して使用
+        return <InteractiveScene className="aframe-scene" />;
+      case 'vr':
+        return <VRScene className="aframe-scene" />;
+      default:
+        return <AFrameScene className="aframe-scene" />;
+    }
   };
 
   return (
     <div className="App">
-      {/* ページ上部のヘッダー部分を削除 */}
+      <header className="App-header">
+        <h1>A-Frame React Demo</h1>
+        <p>VR/AR 3Dシーンを体験してください</p>
+        <p>A-Frame Status: {aframeLoaded ? 'Loaded' : 'Loading...'}</p>
+        <div className="scene-controls">
+          <button 
+            onClick={() => setCurrentScene('basic')}
+            className={currentScene === 'basic' ? 'active' : ''}
+          >
+            基本シーン
+          </button>
+          <button 
+            onClick={() => setCurrentScene('interactive')}
+            className={currentScene === 'interactive' ? 'active' : ''}
+          >
+            インタラクティブ
+          </button>
+          <button 
+            onClick={() => setCurrentScene('vr')}
+            className={currentScene === 'vr' ? 'active' : ''}
+          >
+            VRシーン
+          </button>
+        </div>
+      </header>
       <main>
         {renderScene()}
       </main>
@@ -44,8 +71,51 @@ function App() {
   );
 }
 
+// シンプルなA-Frameシーンコンポーネント (変更なし)
+const AFrameScene = ({ className = '' }) => {
+  return (
+    <div className={className}>
+      <a-scene embedded vr-mode-ui="enabled: false">
+        <a-entity
+          camera
+          look-controls
+          wasd-controls
+          position="0 1.6 0"
+        />
+        <a-box
+          id="myBox"
+          position="-1 0.5 -3"
+          rotation="0 45 0"
+          color="#4CC3D9"
+          animation="property: rotation; to: 0 360 0; loop: true; dur: 5000"
+        />
+        <a-sphere
+          position="0 1.25 -5"
+          radius="1.25"
+          color="#EF2D5E"
+          event-set__click="
+            _event: click;
+            material.color: #FFC65D;
+            _target: #myBox;
+            animation.to: 0 90 0;"
+        />
+        <a-plane
+          position="0 0 -4"
+          rotation="-90 0 0"
+          width="4"
+          height="4"
+          color="#7BC8A4"
+        />
+        <a-sky color="#ECECEC" />
+      </a-scene>
+    </div>
+  );
+};
+
+// 修正するInteractiveSceneコンポーネント
 const InteractiveScene = ({ className = '' }) => {
   useEffect(() => {
+    // A-Frameが読み込まれているか確認してからコンポーネントを登録
     if (typeof AFRAME !== 'undefined' && !AFRAME.components['hit-test-handler']) {
       AFRAME.registerComponent('hit-test-handler', {
         init: function () {
@@ -65,7 +135,6 @@ const InteractiveScene = ({ className = '' }) => {
       <a-scene
         embedded
         webxr="requiredFeatures: hit-test;"
-        vr-mode-ui="enabled: false;"
         renderer="logarithmicDepthBuffer: true;"
       >
         <a-cylinder 
@@ -170,6 +239,7 @@ const InteractiveScene = ({ className = '' }) => {
         <a-sky 
           id="mySky"
           color="#ECECEC"
+          hide-on-enter-ar
         ></a-sky>
 
         <a-entity
@@ -186,6 +256,49 @@ const InteractiveScene = ({ className = '' }) => {
 
         <a-entity light="type: ambient; color: #BBB"></a-entity>
         <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
+      </a-scene>
+    </div>
+  );
+};
+
+// その他のコンポーネント (変更なし)
+const VRScene = ({ className = '' }) => {
+  return (
+    <div className={className}>
+      <a-scene embedded vr-mode-ui="enabled: true">
+        <a-entity
+          camera
+          look-controls
+          wasd-controls
+          position="0 1.6 0"
+        />
+        <a-box
+          position="0 0.5 -3"
+          rotation="0 45 0"
+          color="#4CC3D9"
+          animation="property: rotation; to: 0 360 0; loop: true; dur: 5000"
+        />
+        <a-sphere
+          position="2 1.25 -5"
+          radius="1.25"
+          color="#EF2D5E"
+        />
+        <a-cylinder
+          position="-2 1 -5"
+          radius="0.5"
+          height="2"
+          color="#FFC65D"
+        />
+        <a-plane
+          position="0 0 -4"
+          rotation="-90 0 0"
+          width="8"
+          height="8"
+          color="#7BC8A4"
+        />
+        <a-sky color="#87CEEB" />
+        <a-light type="ambient" color="#404040" />
+        <a-light type="directional" position="0 1 0" color="#ffffff" intensity="0.5" />
       </a-scene>
     </div>
   );
