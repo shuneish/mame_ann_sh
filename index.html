@@ -9,14 +9,15 @@
     <a-scene>
       <a-box
         id="myBox"
-        position="-1 0.5 -3"
+        position="-1.97918 4.68708 -3"
         rotation="0 45 0"
         color="#4CC3D9"
         animation="property: rotation; to: 0 360 0; loop: true; dur: 5000"
       ></a-box>
 
       <a-sphere
-        position="0 1.25 -5"
+        id="mySphere"
+        position="2.01444 2.16323 -5"
         radius="1.25"
         color="#EF2D5E"
         event-set__click="
@@ -34,7 +35,11 @@
         color="#7BC8A4"
       ></a-plane>
 
-      <a-sky color="#ECECEC"></a-sky>
+      <a-sky 
+        id="mySky"
+        color="#ECECEC"
+        hide-on-enter-ar
+      ></a-sky>
 
       <a-entity
         camera
