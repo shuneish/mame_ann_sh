@@ -2,41 +2,43 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
+  // シーンは 'interactive' のみになったため、useStateを簡略化
   const [aframeLoaded, setAframeLoaded] = useState(false);
 
   useEffect(() => {
-    // A-Frameとar-hit-testライブラリの初期化
+    // A-Frameの初期化
     if (typeof window !== 'undefined') {
-      const aframeScript = document.createElement('script');
-      aframeScript.src = 'https://aframe.io/releases/1.4.2/aframe.min.js';
-      aframeScript.onload = () => {
-        const hitTestScript = document.createElement('script');
-        hitTestScript.src = 'https://unpkg.com/aframe-ar-hit-test@1.1.0/dist/aframe-ar-hit-test.js';
-        hitTestScript.onload = () => {
-          console.log('Both A-Frame and ar-hit-test loaded successfully');
-          setAframeLoaded(true);
-        };
-        hitTestScript.onerror = () => {
-          console.error('Failed to load ar-hit-test');
-        };
-        document.head.appendChild(hitTestScript);
+      const script = document.createElement('script');
+      script.src = 'https://aframe.io/releases/1.4.2/aframe.min.js';
+      script.onload = () => {
+        console.log('A-Frame loaded successfully');
+        setAframeLoaded(true);
       };
-      aframeScript.onerror = () => {
+      script.onerror = () => {
         console.error('Failed to load A-Frame');
       };
-      document.head.appendChild(aframeScript);
+      document.head.appendChild(script);
     }
   }, []);
 
   const renderScene = () => {
     if (!aframeLoaded) {
-      return <div>Loading...</div>;
+      return <div>Loading A-Frame...</div>;
     }
+    // 'InteractiveScene' のみをレンダリング
     return <InteractiveScene className="aframe-scene" />;
   };
 
   return (
     <div className="App">
+      <header className="App-header">
+        <h1>A-Frame React Demo</h1>
+        <p>AR 3Dシーンを体験してください</p>
+        <p>A-Frame Status: {aframeLoaded ? 'Loaded' : 'Loading...'}</p>
+        <div className="scene-controls">
+          {/* シーン切り替えボタンを削除 */}
+        </div>
+      </header>
       <main>
         {renderScene()}
       </main>
@@ -66,7 +68,6 @@ const InteractiveScene = ({ className = '' }) => {
       <a-scene
         embedded
         webxr="requiredFeatures: hit-test;"
-        vr-mode-ui="enabled: false;"
         renderer="logarithmicDepthBuffer: true;"
       >
         <a-cylinder 
