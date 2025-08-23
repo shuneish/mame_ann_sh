@@ -138,15 +138,18 @@ const ShootingGame = ({ className = '' }) => {
       <a-scene 
         embedded 
         vr-mode-ui="enabled: true"
+        arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
+        renderer="logarithmicDepthBuffer: true;"
       >
-        {/* カメラ */}
+        {/* AR用のカメラ */}
         <a-entity
           camera
           look-controls="enabled: true"
           wasd-controls="enabled: true"
           position="0 1.6 0"
+          arjs-look-controls="smoothingFactor: 0.1"
         >
-          {/* カーソル（VR/ARでの操作用） */}
+          {/* AR用のカーソル */}
           <a-cursor
             color="#FFFFFF"
             position="0 0 -1"
@@ -156,6 +159,7 @@ const ShootingGame = ({ className = '' }) => {
             animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1"
             raycaster="objects: .target; enabled: true"
             cursor="rayOrigin: mouse"
+            arjs-cursor="fuse: false; maxDistance: 30;"
           />
         </a-entity>
 
@@ -169,20 +173,23 @@ const ShootingGame = ({ className = '' }) => {
             data-target-id={target.id}
             class="target"
             animation="property: rotation; to: 0 360 0; loop: true; dur: 3000"
+            arjs-look-at="[camera]"
           />
         ))}
 
-        {/* 地面 */}
+        {/* AR用の地面（現実世界の地面に合わせる） */}
         <a-plane
           position="0 0 -4"
           rotation="-90 0 0"
           width="10"
           height="10"
           color="#7BC8A4"
+          material="opacity: 0.5; transparent: true;"
+          arjs-look-at="[camera]"
         />
 
-        {/* 空 */}
-        <a-sky color="#87CEEB" />
+        {/* AR用の空（現実世界を表示） */}
+        <a-sky color="#87CEEB" material="opacity: 0.1; transparent: true;" />
 
         {/* ライティング */}
         <a-light type="ambient" color="#404040" />
