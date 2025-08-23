@@ -39,22 +39,6 @@ const ShootingGame = ({ className = '' }) => {
     setShowScoreManager(true);
   };
 
-  // ターゲットをクリックした時の処理
-  const handleTargetClick = (targetId) => {
-    if (!gameActive) return;
-    
-    // スコア加算
-    setScore(prev => prev + 10);
-    
-    // ターゲットを削除
-    setTargets(prev => prev.filter(target => target.id !== targetId));
-    
-    // 新しいターゲットを生成
-    setTimeout(() => {
-      setTargets(prev => [...prev, generateTarget()]);
-    }, 1000);
-  };
-
   // ゲーム時間の管理
   useEffect(() => {
     if (!gameActive) return;
@@ -66,19 +50,24 @@ const ShootingGame = ({ className = '' }) => {
     return () => clearTimeout(timer);
   }, [gameActive]);
 
-  // A-Frameのイベントリスナーを設定
+  // DOMイベントリスナーを設定
   useEffect(() => {
-    const scene = document.querySelector('a-scene');
-    if (!scene) return;
-
-    const handleTargetClick = (event) => {
-      const targetId = event.target.getAttribute('data-target-id');
-      if (targetId && gameActive) {
+    const handleClick = (event) => {
+      // ターゲット要素をクリックしたかチェック
+      const targetElement = event.target.closest('[data-target-id]');
+      if (targetElement && gameActive) {
+        const targetId = targetElement.getAttribute('data-target-id');
+        console.log('Target clicked:', targetId);
+        
         // スコア加算
         setScore(prev => prev + 10);
         
         // ターゲットを削除
-        setTargets(prev => prev.filter(target => target.id.toString() !== targetId));
+        setTargets(prev => {
+          const newTargets = prev.filter(target => target.id.toString() !== targetId);
+          console.log('Remaining targets:', newTargets.length);
+          return newTargets;
+        });
         
         // 新しいターゲットを生成
         setTimeout(() => {
@@ -87,12 +76,15 @@ const ShootingGame = ({ className = '' }) => {
       }
     };
 
-    scene.addEventListener('click', handleTargetClick);
+    // イベントリスナーを追加
+    document.addEventListener('click', handleClick);
+    document.addEventListener('touchstart', handleClick);
     
     return () => {
-      scene.removeEventListener('click', handleTargetClick);
+      document.removeEventListener('click', handleClick);
+      document.removeEventListener('touchstart', handleClick);
     };
-  }, [gameActive, targets]);
+  }, [gameActive]);
 
   return (
     <div className={className}>
@@ -126,8 +118,8 @@ const ShootingGame = ({ className = '' }) => {
         {/* カメラ */}
         <a-entity
           camera
-          look-controls
-          wasd-controls
+          look-controls="enabled: true"
+          wasd-controls="enabled: true"
           position="0 1.6 0"
         >
           {/* カーソル（VR/ARでの操作用） */}
@@ -138,7 +130,8 @@ const ShootingGame = ({ className = '' }) => {
             material="color: #FFFFFF; shader: flat"
             animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1"
             animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1"
-            raycaster="objects: .target"
+            raycaster="objects: .target; enabled: true"
+            cursor="rayOrigin: mouse"
           />
         </a-entity>
 
@@ -152,16 +145,7 @@ const ShootingGame = ({ className = '' }) => {
             data-target-id={target.id}
             class="target"
             animation="property: rotation; to: 0 360 0; loop: true; dur: 3000"
-            event-set__click="
-              _event: click;
-              material.color: #FF0000;
-              animation.dur: 500;"
-            event-set__mouseenter="
-              _event: mouseenter;
-              scale: 1.2 1.2 1.2;"
-            event-set__mouseleave="
-              _event: mouseleave;
-              scale: 1 1 1;"
+            style="cursor: pointer;"
           />
         ))}
 
