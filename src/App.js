@@ -42,7 +42,7 @@ function App() {
       return <div>Loading A-Frame...</div>;
     }
 
-    return <AFrameScene className="aframe-scene" />
+    return <InteractiveScene className="aframe-scene" />;
 
     // switch (currentScene) {
     //   case 'interactive':
