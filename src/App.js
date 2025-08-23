@@ -294,176 +294,133 @@
 // export default App;
 
 
-import React, { useEffect, useState } from 'react';
+// src/App.js
+
+import React, { useEffect } from 'react';
+import 'aframe';
 import './App.css';
 
 function App() {
-  const [aframeLoaded, setAframeLoaded] = useState(false);
-
+  // Appコンポーネントがマウントされたときに、A-Frameのカスタムコンポーネントを登録します。
   useEffect(() => {
-    // A-Frameライブラリのみを読み込む
-    if (typeof window !== 'undefined') {
-      const script = document.createElement('script');
-      script.src = 'https://aframe.io/releases/1.4.2/aframe.min.js';
-      script.onload = () => {
-        console.log('A-Frame loaded successfully');
-        setAframeLoaded(true);
-      };
-      script.onerror = () => {
-        console.error('Failed to load A-Frame');
-      };
-      document.head.appendChild(script);
+    // すでに登録済みの場合は再登録をスキップします。
+    if (AFRAME.components['hit-test-handler']) {
+      return;
     }
-  }, []);
 
-  const renderScene = () => {
-    if (!aframeLoaded) {
-      return <div>Loading...</div>;
-    }
-    return <InteractiveScene className="aframe-scene" />;
-  };
+    AFRAME.registerComponent('hit-test-handler', {
+      init: function () {
+        this.el.addEventListener('mousedown', function (evt) {
+          const intersectedEl = evt.detail.intersectedEl;
+
+          // クリックした要素が 'target' クラスを持っている場合、それを非表示にします。
+          if (intersectedEl && intersectedEl.classList.contains('target')) {
+            intersectedEl.setAttribute('visible', false);
+          }
+        });
+      },
+    });
+  }, []); // 空の依存配列[]により、この処理は一度だけ実行されます。
 
   return (
     <div className="App">
-      <main>
-        {renderScene()}
-      </main>
-    </div>
-  );
-}
-
-// InteractiveSceneコンポーネント
-const InteractiveScene = ({ className = '' }) => {
-  // a-sceneにアタッチするコンポーネントとして再定義
-  useEffect(() => {
-    if (typeof AFRAME !== 'undefined' && !AFRAME.components['hit-test-handler']) {
-      AFRAME.registerComponent('hit-test-handler', {
-        init: function () {
-          // シーンがARモードに入ったときのイベントをリッスン
-          this.el.addEventListener('enter-vr', () => {
-            if (this.el.is('ar-mode')) {
-              console.log('AR mode entered.');
-              // ARセッション内のタップイベントをリッスン
-              this.el.renderer.xr.addEventListener('select', (evt) => {
-                const raycaster = new AFRAME.THREE.Raycaster();
-                raycaster.setFromCamera({ x: 0, y: 0 }, this.el.camera.el.object3D);
-                
-                const intersects = raycaster.intersectObjects(this.el.children, true);
-                
-                for (let i = 0; i < intersects.length; i++) {
-                  const intersectedEl = intersects[i].object.el;
-                  if (intersectedEl && intersectedEl.classList.contains('target')) {
-                    intersectedEl.setAttribute('visible', false);
-                    break;
-                  }
-                }
-              });
-            }
-          });
-        }
-      });
-    }
-  }, []);
-
-  return (
-    <div className={className}>
       <a-scene
-        embedded
         xr-mode-ui="XRMode: xr"
-        webxr="requiredFeatures: hit-test;"
+        ar-hit-test="type: tracked; target: .target;"
         renderer="logarithmicDepthBuffer: true;"
-        hit-test-handler // a-sceneに直接アタッチ
       >
-        <a-cylinder 
-          class="target"
+        {/* ターゲットとなるシリンダー */}
+        <a-cylinder
+          className="target"
           rotation="90 38.434 0"
           position="1.66192 0.75 1.64353"
-          radius="0.35" 
-          height="0.01" 
+          radius="0.35"
+          height="0.01"
           color="#FFC65D"
         ></a-cylinder>
 
-        <a-cylinder 
-          class="target" 
+        <a-cylinder
+          className="target"
           rotation="90 38.434 0"
           position="-1.82386 0.75 -1.44074"
-          radius="0.35" 
-          height="0.01" 
+          radius="0.35"
+          height="0.01"
           color="#FFC65D"
         ></a-cylinder>
 
-        <a-cylinder 
-          class="target"
+        <a-cylinder
+          className="target"
           rotation="90.00021045914971 -43.673707933847 0"
           position="1.93213 0.8299 -0.84174"
-          radius="0.35" 
-          height="0.01" 
+          radius="0.35"
+          height="0.01"
           color="#FFC65D"
         ></a-cylinder>
 
-        <a-cylinder 
-          class="target"
+        <a-cylinder
+          className="target"
           rotation="89.99963750135457 133.08319890621684 0"
           position="-1.13573 0.75 1.77243"
-          radius="0.35" 
-          height="0.01" 
+          radius="0.35"
+          height="0.01"
           color="#FFC65D"
         ></a-cylinder>
 
-        <a-cylinder 
-          class="target" 
+        <a-cylinder
+          className="target"
           rotation="42.709 -104.296 -122.116"
           position="-0.59651 2.12601 -2.19978"
-          radius="0.35" 
-          height="0.01" 
+          radius="0.35"
+          height="0.01"
           color="#FFC65D"
         ></a-cylinder>
 
-        <a-cylinder 
-          class="target"
+        <a-cylinder
+          className="target"
           rotation="72.98279098596913 179.9998479605043 -169.12167126215047"
           position="0.82084 1.58734 -1.71492"
-          radius="0.35" 
-          height="0.01" 
+          radius="0.35"
+          height="0.01"
           color="#FFC65D"
         ></a-cylinder>
 
-        <a-cylinder 
-          class="target"
+        <a-cylinder
+          className="target"
           rotation="76.04582335873852 114.91929088497949 20.738780352555278"
           position="2.09379 1.77134 0.30033"
-          radius="0.35" 
-          height="0.01" 
+          radius="0.35"
+          height="0.01"
           color="#FFC65D"
         ></a-cylinder>
 
-        <a-cylinder 
-          class="target"
+        <a-cylinder
+          className="target"
           rotation="-55.98313320443761 -173.87091842598988 173.3879150046946"
           position="0.08255 1.63931 2.45461"
-          radius="0.35" 
-          height="0.01" 
+          radius="0.35"
+          height="0.01"
           color="#FFC65D"
         ></a-cylinder>
 
-        <a-cylinder 
-          class="target"
+        <a-cylinder
+          className="target"
           rotation="73.16155381804995 -90.00021045914971 168.4937095186871"
           position="-2.19323 1.55836 0.6957"
-          radius="0.35" 
-          height="0.01" 
+          radius="0.35"
+          height="0.01"
           color="#FFC65D"
         ></a-cylinder>
 
-        <a-cylinder 
-          class="target"
+        <a-cylinder
+          className="target"
           rotation="70.67147924041139 -90.00021045914971 -159.3636270532774"
           position="-2.746 0.75 -0.545"
-          radius="0.2" 
-          height="0.01" 
+          radius="0.2"
+          height="0.01"
           color="#FFC65D"
         ></a-cylinder>
-        
+
+        {/* その他のエンティティ */}
         <a-plane
           id="myPlane"
           position="0 0 0"
@@ -473,27 +430,35 @@ const InteractiveScene = ({ className = '' }) => {
           color="#7BC8A4"
         ></a-plane>
 
-        <a-sky 
+        <a-sky
           id="mySky"
           color="#ECECEC"
+          hide-on-enter-ar
         ></a-sky>
 
+        {/* カーソルとヒットテスト用のエンティティ */}
         <a-entity
           cursor="rayOrigin: mouse"
           raycaster="objects: .target;"
+          hit-test-handler
         ></a-entity>
 
-        <a-camera 
+        {/* カメラ */}
+        <a-camera
           id="myCamera"
-          position="0 0.4 0" 
+          position="0 0.4 0"
           wasd-controls="acceleration:10;"
         ></a-camera>
 
+        {/* ライト */}
         <a-entity light="type: ambient; color: #BBB"></a-entity>
-        <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
+        <a-entity
+          light="type: directional; color: #FFF; intensity: 0.6"
+          position="-0.5 1 1"
+        ></a-entity>
       </a-scene>
     </div>
   );
-};
+}
 
 export default App;
