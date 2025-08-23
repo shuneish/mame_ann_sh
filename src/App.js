@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
-  // シーンは 'interactive' のみになったため、useStateを簡略化
   const [aframeLoaded, setAframeLoaded] = useState(false);
 
   useEffect(() => {
@@ -25,20 +24,12 @@ function App() {
     if (!aframeLoaded) {
       return <div>Loading A-Frame...</div>;
     }
-    // 'InteractiveScene' のみをレンダリング
     return <InteractiveScene className="aframe-scene" />;
   };
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>A-Frame React Demo</h1>
-        <p>AR 3Dシーンを体験してください</p>
-        <p>A-Frame Status: {aframeLoaded ? 'Loaded' : 'Loading...'}</p>
-        <div className="scene-controls">
-          {/* シーン切り替えボタンを削除 */}
-        </div>
-      </header>
+      {/* ページ上部のヘッダー部分を削除 */}
       <main>
         {renderScene()}
       </main>
@@ -46,7 +37,6 @@ function App() {
   );
 }
 
-// InteractiveSceneコンポーネントのみを残す
 const InteractiveScene = ({ className = '' }) => {
   useEffect(() => {
     if (typeof AFRAME !== 'undefined' && !AFRAME.components['hit-test-handler']) {
