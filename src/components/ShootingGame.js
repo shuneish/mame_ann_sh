@@ -66,6 +66,34 @@ const ShootingGame = ({ className = '' }) => {
     return () => clearTimeout(timer);
   }, [gameActive]);
 
+  // A-Frameのイベントリスナーを設定
+  useEffect(() => {
+    const scene = document.querySelector('a-scene');
+    if (!scene) return;
+
+    const handleTargetClick = (event) => {
+      const targetId = event.target.getAttribute('data-target-id');
+      if (targetId && gameActive) {
+        // スコア加算
+        setScore(prev => prev + 10);
+        
+        // ターゲットを削除
+        setTargets(prev => prev.filter(target => target.id.toString() !== targetId));
+        
+        // 新しいターゲットを生成
+        setTimeout(() => {
+          setTargets(prev => [...prev, generateTarget()]);
+        }, 1000);
+      }
+    };
+
+    scene.addEventListener('click', handleTargetClick);
+    
+    return () => {
+      scene.removeEventListener('click', handleTargetClick);
+    };
+  }, [gameActive, targets]);
+
   return (
     <div className={className}>
       <div className="game-ui">
@@ -101,7 +129,18 @@ const ShootingGame = ({ className = '' }) => {
           look-controls
           wasd-controls
           position="0 1.6 0"
-        />
+        >
+          {/* カーソル（VR/ARでの操作用） */}
+          <a-cursor
+            color="#FFFFFF"
+            position="0 0 -1"
+            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+            material="color: #FFFFFF; shader: flat"
+            animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1"
+            animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1"
+            raycaster="objects: .target"
+          />
+        </a-entity>
 
         {/* ターゲット */}
         {targets.map(target => (
@@ -110,13 +149,19 @@ const ShootingGame = ({ className = '' }) => {
             position={target.position}
             radius={target.size}
             color={target.color}
+            data-target-id={target.id}
+            class="target"
             animation="property: rotation; to: 0 360 0; loop: true; dur: 3000"
             event-set__click="
               _event: click;
               material.color: #FF0000;
               animation.dur: 500;"
-            onClick={() => handleTargetClick(target.id)}
-            class="target"
+            event-set__mouseenter="
+              _event: mouseenter;
+              scale: 1.2 1.2 1.2;"
+            event-set__mouseleave="
+              _event: mouseleave;
+              scale: 1 1 1;"
           />
         ))}
 
