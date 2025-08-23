@@ -369,6 +369,7 @@ const InteractiveScene = ({ className = '' }) => {
     <div className={className}>
       <a-scene
         embedded
+        xr-mode-ui="XRMode: xr"
         webxr="requiredFeatures: hit-test;"
         renderer="logarithmicDepthBuffer: true;"
         hit-test-handler // a-sceneに直接アタッチ
