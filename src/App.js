@@ -21,20 +21,38 @@ function App() {
     }
   }, []);
 
+  // const renderScene = () => {
+  //   if (!aframeLoaded) {
+  //     return <div>Loading A-Frame...</div>;
+  //   }
+
+  //   switch (currentScene) {
+  //     case 'interactive':
+  //       // InteractiveSceneコンポーネントを修正して使用
+  //       return <InteractiveScene className="aframe-scene" />;
+  //     case 'vr':
+  //       return <VRScene className="aframe-scene" />;
+  //     default:
+  //       return <AFrameScene className="aframe-scene" />;
+  //   }
+  // };
+
   const renderScene = () => {
     if (!aframeLoaded) {
       return <div>Loading A-Frame...</div>;
     }
 
-    switch (currentScene) {
-      case 'interactive':
-        // InteractiveSceneコンポーネントを修正して使用
-        return <InteractiveScene className="aframe-scene" />;
-      case 'vr':
-        return <VRScene className="aframe-scene" />;
-      default:
-        return <AFrameScene className="aframe-scene" />;
-    }
+    return <AFrameScene className="aframe-scene" />
+
+    // switch (currentScene) {
+    //   case 'interactive':
+    //     // InteractiveSceneコンポーネントを修正して使用
+    //     return <InteractiveScene className="aframe-scene" />;
+    //   case 'vr':
+    //     return <VRScene className="aframe-scene" />;
+    //   default:
+    //     return <AFrameScene className="aframe-scene" />;
+    // }
   };
 
   return (
