@@ -121,41 +121,148 @@ const AFrameScene = ({ className = '' }) => {
 };
 
 const InteractiveScene = ({ className = '' }) => {
+  useEffect(() => {
+    // A-Frameが読み込まれているか確認してからコンポーネントを登録
+    if (typeof AFRAME !== 'undefined' && !AFRAME.components['hit-test-handler']) {
+      AFRAME.registerComponent('hit-test-handler', {
+        init: function () {
+          this.el.addEventListener('mousedown', function (evt) {
+            const intersectedEl = evt.detail.intersectedEl;
+            if (intersectedEl && intersectedEl.classList.contains('target')) {
+              intersectedEl.setAttribute('visible', false);
+            }
+          });
+        }
+      });
+    }
+  }, []);
+
   return (
     <div className={className}>
-      <a-scene embedded vr-mode-ui="enabled: false">
-        {/* カメラ */}
-        <a-entity
-          camera
-          look-controls
-          wasd-controls
-          position="0 1.6 0"
-        />
+      <a-scene
+        embedded
+        webxr="requiredFeatures: hit-test;"
+        renderer="logarithmicDepthBuffer: true;"
+      >
+        <a-cylinder 
+          class="target"
+          rotation="90 38.434 0"
+          position="1.66192 0.75 1.64353"
+          radius="0.35" 
+          height="0.01" 
+          color="#FFC65D"
+        ></a-cylinder>
 
-        {/* インタラクティブな立方体 */}
-        <a-box
-          id="interactiveBox"
-          position="0 0.5 -3"
-          rotation="0 0 0"
-          color="#4CC3D9"
-          animation="property: rotation; to: 0 360 0; loop: true; dur: 3000"
-          event-set__click="
-            _event: click;
-            material.color: #FF6B6B;
-            animation.dur: 1000;"
-        />
+        <a-cylinder 
+          class="target" 
+          rotation="90 38.434 0"
+          position="-1.82386 0.75 -1.44074"
+          radius="0.35" 
+          height="0.01" 
+          color="#FFC65D"
+        ></a-cylinder>
 
-        {/* 地面 */}
+        <a-cylinder 
+          class="target"
+          rotation="90.00021045914971 -43.673707933847 0"
+          position="1.93213 0.8299 -0.84174"
+          radius="0.35" 
+          height="0.01" 
+          color="#FFC65D"
+        ></a-cylinder>
+
+        <a-cylinder 
+          class="target"
+          rotation="89.99963750135457 133.08319890621684 0"
+          position="-1.13573 0.75 1.77243"
+          radius="0.35" 
+          height="0.01" 
+          color="#FFC65D"
+        ></a-cylinder>
+
+        <a-cylinder 
+          class="target" 
+          rotation="42.709 -104.296 -122.116"
+          position="-0.59651 2.12601 -2.19978"
+          radius="0.35" 
+          height="0.01" 
+          color="#FFC65D"
+        ></a-cylinder>
+
+        <a-cylinder 
+          class="target"
+          rotation="72.98279098596913 179.9998479605043 -169.12167126215047"
+          position="0.82084 1.58734 -1.71492"
+          radius="0.35" 
+          height="0.01" 
+          color="#FFC65D"
+        ></a-cylinder>
+
+        <a-cylinder 
+          class="target"
+          rotation="76.04582335873852 114.91929088497949 20.738780352555278"
+          position="2.09379 1.77134 0.30033"
+          radius="0.35" 
+          height="0.01" 
+          color="#FFC65D"
+        ></a-cylinder>
+
+        <a-cylinder 
+          class="target"
+          rotation="-55.98313320443761 -173.87091842598988 173.3879150046946"
+          position="0.08255 1.63931 2.45461"
+          radius="0.35" 
+          height="0.01" 
+          color="#FFC65D"
+        ></a-cylinder>
+
+        <a-cylinder 
+          class="target"
+          rotation="73.16155381804995 -90.00021045914971 168.4937095186871"
+          position="-2.19323 1.55836 0.6957"
+          radius="0.35" 
+          height="0.01" 
+          color="#FFC65D"
+        ></a-cylinder>
+
+        <a-cylinder 
+          class="target"
+          rotation="70.67147924041139 -90.00021045914971 -159.3636270532774"
+          position="-2.746 0.75 -0.545"
+          radius="0.2" 
+          height="0.01" 
+          color="#FFC65D"
+        ></a-cylinder>
+
         <a-plane
-          position="0 0 -4"
+          id="myPlane"
+          position="0 0 0"
           rotation="-90 0 0"
-          width="6"
-          height="6"
+          width="4"
+          height="4"
           color="#7BC8A4"
-        />
+        ></a-plane>
 
-        {/* 空 */}
-        <a-sky color="#87CEEB" />
+        <a-sky 
+          id="mySky"
+          color="#ECECEC"
+          hide-on-enter-ar
+        ></a-sky>
+
+        <a-entity
+          cursor="rayOrigin: mouse"
+          raycaster="objects: .target;"
+          hit-test-handler
+        ></a-entity>
+
+        <a-camera 
+          id="myCamera"
+          position="0 0.4 0" 
+          wasd-controls="acceleration:10;"
+        ></a-camera>
+
+        <a-entity light="type: ambient; color: #BBB"></a-entity>
+        <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="-0.5 1 1"></a-entity>
       </a-scene>
     </div>
   );
