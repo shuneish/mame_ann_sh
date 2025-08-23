@@ -137,7 +137,7 @@ const ShootingGame = ({ className = '' }) => {
 
       <a-scene 
         embedded 
-        vr-mode-ui="enabled: false"
+        vr-mode-ui="enabled: true"
       >
         {/* カメラ */}
         <a-entity
@@ -183,6 +183,7 @@ const ShootingGame = ({ className = '' }) => {
 
         {/* 空 */}
         <a-sky color="#87CEEB" />
+        <hide-on-enter-ar />
 
         {/* ライティング */}
         <a-light type="ambient" color="#404040" />
