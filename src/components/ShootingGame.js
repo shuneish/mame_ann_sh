@@ -11,9 +11,14 @@ const ShootingGame = ({ className = '' }) => {
 
   // ターゲットの生成
   const generateTarget = () => {
-    const x = (Math.random() - 0.5) * 8; // -4 から 4
-    const y = Math.random() * 3 + 1; // 1 から 4
-    const z = Math.random() * 5 - 8; // -8 から -3
+    // 360度全方位にランダムな角度を生成
+    const angle = Math.random() * 2 * Math.PI; // 0 から 2π
+    const distance = Math.random() * 8 + 3; // 3 から 11 の距離
+    
+    // 極座標から直交座標に変換
+    const x = Math.cos(angle) * distance;
+    const z = Math.sin(angle) * distance;
+    const y = Math.random() * 4 + 1; // 1 から 5 の高さ
     
     return {
       id: Date.now() + Math.random(),
