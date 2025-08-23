@@ -1,0 +1,16 @@
+# OSおよびエディタ関連のファイル
+.DS_Store
+.vscode/
+
+# Node.js開発関連のファイル
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# ログファイル
+*.log
+logs/
+.env
+
+# 依存関係
+package-lock.json
