@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
+import ShootingGame from './components/ShootingGame';
 
 function App() {
   const [currentScene, setCurrentScene] = useState('basic');
@@ -31,6 +32,8 @@ function App() {
         return <InteractiveScene className="aframe-scene" />;
       case 'vr':
         return <VRScene className="aframe-scene" />;
+      case 'shooting':
+        return <ShootingGame className="aframe-scene" />;
       default:
         return <AFrameScene className="aframe-scene" />;
     }
@@ -60,6 +63,12 @@ function App() {
             className={currentScene === 'vr' ? 'active' : ''}
           >
             VRシーン
+          </button>
+          <button 
+            onClick={() => setCurrentScene('shooting')}
+            className={currentScene === 'shooting' ? 'active' : ''}
+          >
+            🎯 シューティングゲーム
           </button>
         </div>
       </header>
