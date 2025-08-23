@@ -59,6 +59,7 @@ const InteractiveScene = ({ className = '' }) => {
         embedded
         webxr="requiredFeatures: hit-test;"
         renderer="logarithmicDepthBuffer: true;"
+        xr-mode-ui="XRMode: xr"
       >
         <a-cylinder 
           class="target"
