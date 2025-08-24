@@ -30,7 +30,7 @@ function ShootingGame ({ className = '' , onGameEnd})  {
     setScore(0);
     setGameActive(true);
     // ▼▼▼【追加】ゲーム開始時に残り時間をリセット ▼▼▼
-    setTimeLeft(10);
+    setTimeLeft(30);
     const initialTargets = Array.from({ length: 5 }, () => generateTarget());
     setTargets(initialTargets);
   };

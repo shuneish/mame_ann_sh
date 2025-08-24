@@ -81,8 +81,7 @@ function App() {
     <div className={`App ${currentScreen === 'game' ? 'game-mode' : ''}`}>
       {currentScreen !== 'game' && (
         <header className="App-header">
-          <h1>🎯 ARシューティングゲーム</h1>
-          <p>A-Frame Status: {aframeLoaded ? 'Loaded' : 'Loading...'}</p>
+          <h1>🎯 3Dシューティングゲーム</h1>
         </header>
       )}
       <main>
