@@ -77,10 +77,25 @@ main {
 }
 
 /* スコア管理スタイル */
-.score-manager {
+/* .score-manager {
   position: absolute;
   top: 20px;
   right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1000;
+  min-width: 300px;
+} */
+
+.score-manager {
+  position: absolute;
+  top: 20px;
+  /* `right`を`left`と`transform`で中央揃えに修正 */
+  left: 50%;
+  transform: translateX(-50%);
+  
   background: rgba(0, 0, 0, 0.8);
   color: white;
   padding: 20px;
