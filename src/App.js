@@ -15,7 +15,7 @@ function App() {
         
         // AR.jsの読み込み
         const arjsScript = document.createElement('script');
-        arjsScript.src = 'https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.min.js';
+        arjsScript.src = 'https://unpkg.com/aframe-ar@1.4.2/dist/aframe-ar.min.js';
         arjsScript.onload = () => {
           console.log('AR.js loaded successfully');
           setAframeLoaded(true);

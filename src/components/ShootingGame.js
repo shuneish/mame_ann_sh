@@ -143,9 +143,8 @@ const ShootingGame = ({ className = '' }) => {
       <a-scene 
         embedded 
         vr-mode-ui="enabled: false"
-        arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false; cameraParametersUrl: https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/data/camera_para.dat;"
-        renderer="logarithmicDepthBuffer: true; alpha: true;"
-        background="color: transparent;"
+        arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
+        renderer="logarithmicDepthBuffer: true;"
       >
         {/* AR用のカメラ */}
         <a-entity
@@ -153,7 +152,6 @@ const ShootingGame = ({ className = '' }) => {
           look-controls="enabled: true"
           wasd-controls="enabled: true"
           position="0 1.6 0"
-          arjs-look-controls="smoothingFactor: 0.1"
         >
           {/* AR用のカーソル */}
           <a-cursor
@@ -165,7 +163,6 @@ const ShootingGame = ({ className = '' }) => {
             animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1500; from: 1 1 1; to: 0.1 0.1 0.1"
             raycaster="objects: .target; enabled: true"
             cursor="rayOrigin: mouse"
-            arjs-cursor="fuse: false; maxDistance: 30;"
           />
         </a-entity>
 
