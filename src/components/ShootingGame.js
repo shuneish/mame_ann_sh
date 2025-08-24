@@ -132,11 +132,6 @@ const ShootingGame = ({ className = '' }) => {
                 🎮 ゲーム開始
               </button>
             )}
-            {gameActive && (
-              <button onClick={endGame} className="end-btn">
-                ⏹️ ゲーム終了
-              </button>
-            )}
           </div>
         </div>
         
