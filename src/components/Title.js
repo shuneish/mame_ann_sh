@@ -22,9 +22,9 @@ function Title({ onStartGame }) {
         <div className="game-instructions">
           <h3>📋 遊び方</h3>
           <ul>
-            <li>🎯 3D空間に現れるカラフルな<br />ターゲットをクリック</li>
+            <li>🎯 3D空間に現れるカラフルな<br />ターゲットをクリックorタップ</li>
             <li>⏱️ 制限時間は30秒</li>
-            <li>🏆 高スコアを目指して<br />リーダーボードに名を残そう</li>
+            <li>🏆 高スコアをランキングに残そう</li>
           </ul>
         </div>
       </div>
