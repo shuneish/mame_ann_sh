@@ -194,7 +194,7 @@ const ShootingGame = ({ className = '' }) => {
         /> */}
 
         {/* AR用の空（現実世界を表示） */}
-        <a-sky color="#87CEEB" material="opacity: 0.9;" />
+        <a-sky color="#5ec1e8ff"></a-sky>
 
         {/* ライティング */}
         <a-light type="ambient" color="#404040" />
