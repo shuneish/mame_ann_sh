@@ -142,9 +142,10 @@ const ShootingGame = ({ className = '' }) => {
 
       <a-scene 
         embedded 
-        vr-mode-ui="enabled: true"
-        arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
-        renderer="logarithmicDepthBuffer: true;"
+        vr-mode-ui="enabled: false"
+        arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false; cameraParametersUrl: https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/data/camera_para.dat;"
+        renderer="logarithmicDepthBuffer: true; alpha: true;"
+        background="color: transparent;"
       >
         {/* AR用のカメラ */}
         <a-entity

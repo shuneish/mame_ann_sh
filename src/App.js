@@ -8,16 +8,28 @@ function App() {
   useEffect(() => {
     // A-Frameの初期化
     if (typeof window !== 'undefined') {
-      const script = document.createElement('script');
-      script.src = 'https://aframe.io/releases/1.4.2/aframe.min.js';
-      script.onload = () => {
+      const aframeScript = document.createElement('script');
+      aframeScript.src = 'https://aframe.io/releases/1.4.2/aframe.min.js';
+      aframeScript.onload = () => {
         console.log('A-Frame loaded successfully');
-        setAframeLoaded(true);
+        
+        // AR.jsの読み込み
+        const arjsScript = document.createElement('script');
+        arjsScript.src = 'https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.min.js';
+        arjsScript.onload = () => {
+          console.log('AR.js loaded successfully');
+          setAframeLoaded(true);
+        };
+        arjsScript.onerror = () => {
+          console.error('Failed to load AR.js');
+          setAframeLoaded(true); // A-Frameは読み込まれているので、ARなしでも動作させる
+        };
+        document.head.appendChild(arjsScript);
       };
-      script.onerror = () => {
+      aframeScript.onerror = () => {
         console.error('Failed to load A-Frame');
       };
-      document.head.appendChild(script);
+      document.head.appendChild(aframeScript);
     }
   }, []);
 
