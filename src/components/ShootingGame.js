@@ -124,8 +124,8 @@ function ShootingGame ({ className = '' , onGameEnd})  {
       <div className="game-ui">
         <div className="game-info">
           <div className="score-display">
-            <span>スコア: {score}</span>
-            <span>残り時間: <br />{timeLeft}s</span>
+            <span>スコア: {score} </span>
+            <span>残り時間: <br />{timeLeft}s </span>
             <span>残りターゲット: {targets.length}個</span>
           </div>
 {/* 
