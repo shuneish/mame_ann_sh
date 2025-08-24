@@ -162,7 +162,7 @@ function ShootingGame ({ className = '' , onGameEnd})  {
           arjs-look-controls="smoothingFactor: 0.1"
         >
           {/* AR用のカーソル */}
-          <a-cursor
+          {/* <a-cursor
             color="#FFFFFF"
             position="0 0 -1"
             geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
@@ -172,7 +172,7 @@ function ShootingGame ({ className = '' , onGameEnd})  {
             raycaster="objects: .target; enabled: true"
             cursor="rayOrigin: mouse"
             arjs-cursor="fuse: false; maxDistance: 30;"
-          />
+          /> */}
         </a-entity>
 
         {/* ターゲット */}
