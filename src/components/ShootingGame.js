@@ -123,7 +123,6 @@ function ShootingGame ({ className = '' , onGameEnd})  {
     <div className={className}>
       <div className="game-ui">
         <div className="game-info">
-          <h2>🎯 ARシューティングゲーム</h2>
           <div className="score-display">
             <span>スコア: {score}</span>
             {/* ▼▼▼【追加】残り時間を表示するUIを追加 ▼▼▼ */}
