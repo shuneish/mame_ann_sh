@@ -54,6 +54,12 @@ main {
   position: relative;
 }
 
+/* ゲーム画面ではmainエリアを画面全体に */
+.App.game-mode main {
+  height: 100vh;
+  flex: none;
+}
+
 .aframe-scene {
   width: 100%;
   height: 100%;
@@ -77,10 +83,24 @@ main {
 }
 
 /* スコア管理スタイル */
-.score-manager {
+/* .score-manager {
   position: absolute;
   top: 20px;
   right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1000;
+  min-width: 300px;
+} */
+
+.score-manager {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  
   background: rgba(0, 0, 0, 0.8);
   color: white;
   padding: 20px;
@@ -213,4 +233,162 @@ main {
 .end-btn {
   background: #f44336;
   color: white;
+}
+
+/* タイトル画面スタイル */
+.title-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px;
+}
+
+.title-content {
+  max-width: 600px;
+  text-align: center;
+}
+
+.game-title {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.game-description {
+  margin-bottom: 30px;
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.game-description p {
+  margin: 10px 0;
+}
+
+.title-controls {
+  margin-bottom: 40px;
+}
+
+.start-game-btn {
+  padding: 15px 40px;
+  font-size: 1.5rem;
+  background: linear-gradient(45deg, #4CAF50, #45a049);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.start-game-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(45deg, #45a049, #4CAF50);
+}
+
+.game-instructions {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+}
+
+.game-instructions h3 {
+  margin: 0 0 15px 0;
+  font-size: 1.5rem;
+}
+
+.game-instructions ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.game-instructions li {
+  margin: 10px 0;
+  padding: 8px 0;
+  font-size: 1.1rem;
+}
+
+/* スコア画面のスタイル調整 */
+.score-manager {
+  position: relative;
+  top: auto;
+  right: auto;
+  background: rgba(0, 0, 0, 0.9);
+  margin: 20px auto;
+  max-width: 500px;
+  width: 90%;
+}
+
+.score-manager-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.replay-btn, .back-to-title-btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.replay-btn {
+  background: #4CAF50;
+  color: white;
+}
+
+.replay-btn:hover {
+  background: #45a049;
+}
+
+.back-to-title-btn {
+  background: #2196F3;
+  color: white;
+}
+
+.back-to-title-btn:hover {
+  background: #1976D2;
+}
+
+/* ローディング画面 */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 1.5rem;
+  color: #666;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .game-title {
+    font-size: 2rem;
+  }
+  
+  .game-description {
+    font-size: 1rem;
+  }
+  
+  .start-game-btn {
+    padding: 12px 30px;
+    font-size: 1.2rem;
+  }
+  
+  .game-instructions li {
+    font-size: 1rem;
+  }
+  
+  .score-manager-controls {
+    flex-direction: column;
+  }
 } 

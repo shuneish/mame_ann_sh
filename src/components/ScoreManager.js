@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { collection, addDoc, getDocs, query, orderBy, limit } from 'firebase/firestore';
 import { db } from '../firebase';
 
-const ScoreManager = ({ currentScore = 0, onScoreUpdate }) => {
+function ScoreManager({ currentScore = 0, onScoreUpdate, onBackToTitle, onReplayGame }) {
   const [playerName, setPlayerName] = useState('');
   const [leaderboard, setLeaderboard] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -102,6 +102,18 @@ const ScoreManager = ({ currentScore = 0, onScoreUpdate }) => {
         <button onClick={fetchLeaderboard} className="refresh-btn">
           🔄 更新
         </button>
+        <div className="score-manager-controls">
+          {onReplayGame && (
+            <button onClick={onReplayGame} className="replay-btn">
+              🎮 もう一度プレイ
+            </button>
+          )}
+          {onBackToTitle && (
+            <button onClick={onBackToTitle} className="back-to-title-btn">
+              🏠 タイトルに戻る
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
