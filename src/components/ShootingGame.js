@@ -143,7 +143,7 @@ const ShootingGame = ({ className = '' }) => {
       <a-scene 
         embedded 
         vr-mode-ui="enabled: false"
-        arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
+        arjs="sourceType: webcam; debugUIEnabled: false;"
         renderer="logarithmicDepthBuffer: true;"
       >
         {/* AR用のカメラ */}

@@ -15,13 +15,13 @@ function App() {
         
         // AR.jsの読み込み
         const arjsScript = document.createElement('script');
-        arjsScript.src = 'https://unpkg.com/aframe-ar@1.4.2/dist/aframe-ar.min.js';
+        arjsScript.src = 'https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.min.js';
         arjsScript.onload = () => {
           console.log('AR.js loaded successfully');
           setAframeLoaded(true);
         };
         arjsScript.onerror = () => {
-          console.error('Failed to load AR.js');
+          console.error('Failed to load AR.js, continuing without AR support');
           setAframeLoaded(true); // A-Frameは読み込まれているので、ARなしでも動作させる
         };
         document.head.appendChild(arjsScript);
