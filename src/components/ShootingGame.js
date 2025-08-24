@@ -51,7 +51,7 @@ const ShootingGame = ({ className = '' }) => {
     
     const timer = setTimeout(() => {
       endGame();
-    }, 60000); // 60秒でゲーム終了
+    }, 6000); // 60秒でゲーム終了
     
     return () => clearTimeout(timer);
   }, [gameActive]);
