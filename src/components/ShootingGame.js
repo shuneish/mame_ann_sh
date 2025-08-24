@@ -133,7 +133,7 @@ function ShootingGame({ className = '', onGameEnd }) {
             <span>残りターゲット: {targets.length}</span>
           </div>
           <div className="game-controls">
-            {!gameActive && !showScoreManager && (
+            {!gameActive && (
               <button onClick={startGame} className="start-btn">
                 🎮 ゲーム開始
               </button>
