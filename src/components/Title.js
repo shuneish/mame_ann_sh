@@ -24,7 +24,7 @@ function Title({ onStartGame }) {
           <ul>
             <li>🎯 3D空間に現れるカラフルな<br />ターゲットをクリックorタップ</li>
             <li>⏱️ 制限時間は30秒</li>
-            <li>🏆 高スコアをランキングに残そう</li>
+            <li>🏆 ハイスコアをランキングに残そう</li>
           </ul>
         </div>
       </div>
