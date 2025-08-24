@@ -35,6 +35,11 @@ function ShootingGame ({ className = '' , onGameEnd})  {
     setTargets(initialTargets);
   };
 
+  // コンポーネントマウント時にゲームを自動開始
+  useEffect(() => {
+    startGame();
+  }, []);
+
   // ゲーム終了
   const endGame = () => {
     setGameActive(false);
@@ -125,6 +130,7 @@ function ShootingGame ({ className = '' , onGameEnd})  {
             <span>残り時間: {timeLeft}秒</span>
             <span>残りターゲット: {targets.length}</span>
           </div>
+
           <div className="game-controls">
             {!gameActive  && (
               <button onClick={startGame} className="start-btn">
@@ -137,6 +143,7 @@ function ShootingGame ({ className = '' , onGameEnd})  {
               </button>
             )}
           </div>
+
         </div>
       </div>
 
