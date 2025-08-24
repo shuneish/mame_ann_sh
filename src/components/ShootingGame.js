@@ -30,7 +30,7 @@ function ShootingGame ({ className = '' , onGameEnd})  {
     setScore(0);
     setGameActive(true);
     // ▼▼▼【追加】ゲーム開始時に残り時間をリセット ▼▼▼
-    setTimeLeft(10);
+    setTimeLeft(30);
     const initialTargets = Array.from({ length: 5 }, () => generateTarget());
     setTargets(initialTargets);
   };
@@ -123,12 +123,10 @@ function ShootingGame ({ className = '' , onGameEnd})  {
     <div className={className}>
       <div className="game-ui">
         <div className="game-info">
-          <h2>🎯 ARシューティングゲーム</h2>
           <div className="score-display">
-            <span>スコア: {score}</span>
-            {/* ▼▼▼【追加】残り時間を表示するUIを追加 ▼▼▼ */}
-            <span>残り時間: {timeLeft}秒</span>
-            <span>残りターゲット: {targets.length}</span>
+            <span>スコア: <br />{score} </span>
+            <span>残り時間: <br />{timeLeft}s </span>
+            <span>残りターゲット: <br />{targets.length}個</span>
           </div>
 {/* 
           <div className="game-controls">

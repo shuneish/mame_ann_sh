@@ -4,10 +4,10 @@ function Title({ onStartGame }) {
   return (
     <div className="title-screen">
       <div className="title-content">
-        <h1 className="game-title">🎯 ARシューティングゲーム</h1>
+        <h1 className="game-title">🎯 3D シューティングゲーム</h1>
         <div className="game-description">
-          <p>VR/ARモードで3Dターゲットを撃ってスコアを競おう！</p>
-          <p>60秒間でできるだけ多くのターゲットを撃ち抜いてください</p>
+          <p>スマホを動かして3Dターゲットを撃って<br />スコアを競おう！</p>
+          <p>30秒間でできるだけ多くのターゲットを<br />撃ち抜いてください！</p>
         </div>
         
         <div className="title-controls">
@@ -22,10 +22,9 @@ function Title({ onStartGame }) {
         <div className="game-instructions">
           <h3>📋 遊び方</h3>
           <ul>
-            <li>🎯 3D空間に現れるカラフルなターゲットをクリック</li>
-            <li>⏱️ 制限時間は60秒</li>
-            <li>🏆 高スコアを目指してリーダーボードに挑戦</li>
-            <li>📱 スマートフォンではARモードで遊べます</li>
+            <li>🎯 3D空間に現れるカラフルな<br />ターゲットをクリックorタップ</li>
+            <li>⏱️ 制限時間は30秒</li>
+            <li>🏆 高スコアをランキングに残そう</li>
           </ul>
         </div>
       </div>
