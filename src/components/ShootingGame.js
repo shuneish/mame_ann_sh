@@ -130,7 +130,7 @@ function ShootingGame ({ className = '' , onGameEnd})  {
             <span>残り時間: {timeLeft}秒</span>
             <span>残りターゲット: {targets.length}</span>
           </div>
-
+{/* 
           <div className="game-controls">
             {!gameActive  && (
               <button onClick={startGame} className="start-btn">
@@ -142,7 +142,7 @@ function ShootingGame ({ className = '' , onGameEnd})  {
                 ⏹️ ゲーム終了
               </button>
             )}
-          </div>
+          </div> */}
 
         </div>
       </div>
