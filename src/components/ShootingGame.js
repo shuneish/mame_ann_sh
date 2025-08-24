@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ScoreManager from './ScoreManager';
 
-function ShootingGame({ className = '', onGameEnd }) {
+const ShootingGame = ({ className = '' }) => {
   const [score, setScore] = useState(0);
   const [gameActive, setGameActive] = useState(false);
   const [targets, setTargets] = useState([]);
+  const [showScoreManager, setShowScoreManager] = useState(false);
   const [sceneLoaded, setSceneLoaded] = useState(false);
   // ▼▼▼【追加】残り時間を管理するstateを追加 ▼▼▼
   const [timeLeft, setTimeLeft] = useState(10); 
@@ -29,25 +31,17 @@ function ShootingGame({ className = '', onGameEnd }) {
   const startGame = () => {
     setScore(0);
     setGameActive(true);
-
+    setShowScoreManager(false);
     // ▼▼▼【追加】ゲーム開始時に残り時間をリセット ▼▼▼
     setTimeLeft(10);
     const initialTargets = Array.from({ length: 5 }, () => generateTarget());
     setTargets(initialTargets);
   };
 
-  // コンポーネントマウント時にゲームを自動開始
-  useEffect(() => {
-    startGame();
-  }, []);
-
   // ゲーム終了
   const endGame = () => {
     setGameActive(false);
-    // App.jsにスコア情報を通知
-    if (onGameEnd) {
-      onGameEnd(score);
-    }
+    setShowScoreManager(true);
   };
 
   // ▼▼▼【修正】ゲーム時間とカウントダウンの管理 ▼▼▼
@@ -133,7 +127,7 @@ function ShootingGame({ className = '', onGameEnd }) {
             <span>残りターゲット: {targets.length}</span>
           </div>
           <div className="game-controls">
-            {!gameActive && (
+            {!gameActive && !showScoreManager && (
               <button onClick={startGame} className="start-btn">
                 🎮 ゲーム開始
               </button>
@@ -145,6 +139,10 @@ function ShootingGame({ className = '', onGameEnd }) {
             )}
           </div>
         </div>
+        
+        {showScoreManager && (
+          <ScoreManager currentScore={score} />
+        )}
       </div>
 
       <a-scene 
