@@ -7,18 +7,17 @@ const ShootingGame = ({ className = '' }) => {
   const [targets, setTargets] = useState([]);
   const [showScoreManager, setShowScoreManager] = useState(false);
   const [sceneLoaded, setSceneLoaded] = useState(false);
+  // ▼▼▼【追加】残り時間を管理するstateを追加 ▼▼▼
+  const [timeLeft, setTimeLeft] = useState(10); 
   const gameRef = useRef(null);
 
   // ターゲットの生成
   const generateTarget = () => {
-    // 360度全方位にランダムな角度を生成
-    const angle = Math.random() * 2 * Math.PI; // 0 から 2π
-    const distance = Math.random() * 8 + 3; // 3 から 11 の距離
-    
-    // 極座標から直交座標に変換
+    const angle = Math.random() * 2 * Math.PI;
+    const distance = Math.random() * 8 + 3;
     const x = Math.cos(angle) * distance;
     const z = Math.sin(angle) * distance;
-    const y = Math.random() * 4 + 1; // 1 から 5 の高さ
+    const y = Math.random() * 4 + 1;
     
     return {
       id: Date.now() + Math.random(),
@@ -33,8 +32,8 @@ const ShootingGame = ({ className = '' }) => {
     setScore(0);
     setGameActive(true);
     setShowScoreManager(false);
-    
-    // 初期ターゲットを生成
+    // ▼▼▼【追加】ゲーム開始時に残り時間をリセット ▼▼▼
+    setTimeLeft(10);
     const initialTargets = Array.from({ length: 5 }, () => generateTarget());
     setTargets(initialTargets);
   };
@@ -45,16 +44,26 @@ const ShootingGame = ({ className = '' }) => {
     setShowScoreManager(true);
   };
 
-  // ゲーム時間の管理
+  // ▼▼▼【修正】ゲーム時間とカウントダウンの管理 ▼▼▼
   useEffect(() => {
+    // ゲームがアクティブでない場合は何もしない
     if (!gameActive) return;
-    
-    const timer = setTimeout(() => {
+
+    // 時間が0になったらゲームを終了
+    if (timeLeft <= 0) {
       endGame();
-    }, 6000); // 60秒でゲーム終了
-    
-    return () => clearTimeout(timer);
-  }, [gameActive]);
+      return;
+    }
+
+    // 1秒ごとに残り時間を1減らすインターバルを設定
+    const timer = setInterval(() => {
+      setTimeLeft(prevTime => prevTime - 1);
+    }, 1000);
+
+    // クリーンアップ関数：コンポーネントがアンマウントされるか、
+    // 依存配列の値（gameActive, timeLeft）が変更されたときにインターバルをクリアする
+    return () => clearInterval(timer);
+  }, [gameActive, timeLeft]); // gameActiveかtimeLeftが変わるたびにこのeffectを再実行
 
   // A-Frameシーンの読み込み完了を待つ
   useEffect(() => {
@@ -66,7 +75,6 @@ const ShootingGame = ({ className = '' }) => {
         setTimeout(checkAFrameLoaded, 100);
       }
     };
-
     checkAFrameLoaded();
   }, []);
 
@@ -76,23 +84,19 @@ const ShootingGame = ({ className = '' }) => {
 
     const handleClick = (event) => {
       try {
-        // ターゲット要素をクリックしたかチェック
         const targetElement = event.target.closest('[data-target-id]');
         if (targetElement && gameActive) {
           const targetId = targetElement.getAttribute('data-target-id');
           console.log('Target clicked:', targetId);
           
-          // スコア加算
           setScore(prev => prev + 10);
           
-          // ターゲットを削除
           setTargets(prev => {
             const newTargets = prev.filter(target => target.id.toString() !== targetId);
             console.log('Remaining targets:', newTargets.length);
             return newTargets;
           });
           
-          // 新しいターゲットを生成
           setTimeout(() => {
             setTargets(prev => [...prev, generateTarget()]);
           }, 1000);
@@ -102,7 +106,6 @@ const ShootingGame = ({ className = '' }) => {
       }
     };
 
-    // イベントリスナーを追加
     document.addEventListener('click', handleClick);
     document.addEventListener('touchstart', handleClick);
     
@@ -119,6 +122,8 @@ const ShootingGame = ({ className = '' }) => {
           <h2>🎯 ARシューティングゲーム</h2>
           <div className="score-display">
             <span>スコア: {score}</span>
+            {/* ▼▼▼【追加】残り時間を表示するUIを追加 ▼▼▼ */}
+            <span>残り時間: {timeLeft}秒</span>
             <span>残りターゲット: {targets.length}</span>
           </div>
           <div className="game-controls">
@@ -181,18 +186,7 @@ const ShootingGame = ({ className = '' }) => {
             arjs-look-at="[camera]"
           />
         ))}
-
-        {/* AR用の地面（現実世界の地面に合わせる） */}
-        {/* <a-plane
-          position="0 0 -4"
-          rotation="-90 0 0"
-          width="10"
-          height="10"
-          color="#7BC8A4"
-          material="opacity: 0.5; transparent: true;"
-          arjs-look-at="[camera]"
-        /> */}
-
+        
         {/* AR用の空（現実世界を表示） */}
         <a-sky color="#5ec1e8ff"></a-sky>
 
@@ -204,4 +198,4 @@ const ShootingGame = ({ className = '' }) => {
   );
 };
 
-export default ShootingGame; 
+export default ShootingGame;

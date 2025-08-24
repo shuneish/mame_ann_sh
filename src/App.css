@@ -92,7 +92,6 @@ main {
 .score-manager {
   position: absolute;
   top: 20px;
-  /* `right`を`left`と`transform`で中央揃えに修正 */
   left: 50%;
   transform: translateX(-50%);
   
