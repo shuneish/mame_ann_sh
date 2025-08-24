@@ -142,7 +142,7 @@ const ShootingGame = ({ className = '' }) => {
 
       <a-scene 
         embedded 
-        vr-mode-ui="enabled: true"
+        vr-mode-ui="enabled: false"
         arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
         renderer="logarithmicDepthBuffer: true;"
       >
@@ -194,7 +194,7 @@ const ShootingGame = ({ className = '' }) => {
         /> */}
 
         {/* AR用の空（現実世界を表示） */}
-        {/* <a-sky color="#87CEEB" material="opacity: 0.1; transparent: true;" /> */}
+        <a-sky color="#87CEEB" material="opacity: 0.1; transparent: true;" />
 
         {/* ライティング */}
         <a-light type="ambient" color="#404040" />
