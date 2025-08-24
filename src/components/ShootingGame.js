@@ -125,9 +125,8 @@ function ShootingGame ({ className = '' , onGameEnd})  {
         <div className="game-info">
           <div className="score-display">
             <span>スコア: {score}</span>
-            {/* ▼▼▼【追加】残り時間を表示するUIを追加 ▼▼▼ */}
-            <span>残り時間: {timeLeft}秒</span>
-            <span>残りターゲット: {targets.length}</span>
+            <span>残り時間: <br />{timeLeft}s</span>
+            <span>残りターゲット: {targets.length}個</span>
           </div>
 {/* 
           <div className="game-controls">
