@@ -89,7 +89,7 @@ function ScoreManager({ currentScore = 0, onScoreUpdate, onBackToTitle, onReplay
       </div>
 
       <div className="leaderboard">
-        <h3>🏆 リーダーボード</h3>
+        <h3>🏆 ランキング</h3>
         <div className="leaderboard-list">
           {leaderboard.map((entry, index) => (
             <div key={entry.id} className="leaderboard-item">
