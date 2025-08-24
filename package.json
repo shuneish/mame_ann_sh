@@ -1,11 +1,13 @@
 {
   "name": "a-frame-react-demo",
   "version": "1.0.0",
-  "description": "A-Frame React TypeScript Demo",
+  "description": "A-Frame React TypeScript Demo with WASM acceleration",
   "main": "index.js",
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm run build:wasm && react-scripts build",
+    "build:wasm": "cd src/wasm && wasm-pack build --target web",
+    "dev:wasm": "cd src/wasm && wasm-pack build --target web --dev",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -22,7 +24,8 @@
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "typescript": "^4.9.0"
+    "typescript": "^4.9.0",
+    "wasm-pack": "^0.12.0"
   },
   "browserslist": {
     "production": [

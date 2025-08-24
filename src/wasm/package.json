@@ -1,0 +1,13 @@
+{
+  "name": "shooting-game-wasm",
+  "version": "1.0.0",
+  "description": "WASM module for high-performance 3D calculations",
+  "main": "index.js",
+  "scripts": {
+    "build": "wasm-pack build --target web",
+    "dev": "wasm-pack build --target web --dev"
+  },
+  "dependencies": {
+    "wasm-pack": "^0.12.0"
+  }
+} 
